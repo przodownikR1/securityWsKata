@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property scope="context" name="pattern_stdout"
+		value="%highlight(%.-5level)|%green(%date{yyyy-MM-dd HH:mm:ss.SSS})|%boldMagenta([%thread])|%yellow(%logger{70}:%boldYellow(%line))  %X{first} %X{last}  - %msg%n%red(%rEx)" />
+
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+
+	<consolePlugin />
+	<jmxConfigurator />
+	<withJansi>false</withJansi>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<charset>utf-8</charset>
+			<pattern>${pattern_stdout}</pattern>
+			<pattern></pattern>
+		</encoder>
+	</appender>
+
+	<logger name="pl.java.max" level="info" />
+	<logger name="org.springframework" level="info" />
+	<logger name="org.apache.cxf" level="info" />
+
+	<root>
+		<level value="OFF" />
+		<appender-ref ref="console" />
+
+	</root>
+
+
+</configuration>
