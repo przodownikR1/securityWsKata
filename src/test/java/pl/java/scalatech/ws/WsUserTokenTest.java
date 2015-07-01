@@ -33,7 +33,7 @@ import com.google.common.collect.Maps;
 
 @Slf4j
 public class WsUserTokenTest {
-    private static final String address = "http://localhost:8888/services/helloworld";
+    private static final String ADDRESS = "http://localhost:8888/services/helloworld";
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -48,14 +48,14 @@ public class WsUserTokenTest {
         inLog.setPrettyLogging(true);
         factoryBean.getInInterceptors().add(inLog);
         factoryBean.setServiceClass(HelloWorldImpl.class);
-        factoryBean.setAddress(address);
+        factoryBean.setAddress(ADDRESS);
         factoryBean.create();
     }
 
     @Test
     public void testList() {
         JaxWsProxyFactoryBean factoryBean = new JaxWsProxyFactoryBean();
-        factoryBean.setAddress(address);
+        factoryBean.setAddress(ADDRESS);
         factoryBean.setServiceClass(HelloWorld.class);
         Object obj = factoryBean.create();
         Client client = ClientProxy.getClient(obj);

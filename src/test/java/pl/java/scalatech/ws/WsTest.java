@@ -23,12 +23,12 @@ import pl.java.scalatech.ws.service.HelloWorldImpl;
 @Slf4j
 public class WsTest {
     private HelloWorld clientWs;
-    private static final String address = "http://localhost:8883/services/helloworld";
+    private static final String ADDRESS = "http://localhost:8883/services/helloworld";
 
     @BeforeClass
     public static void startService() {
         HelloWorldImpl implementor = new HelloWorldImpl();
-        javax.xml.ws.Endpoint.publish(address, implementor);
+        javax.xml.ws.Endpoint.publish(ADDRESS, implementor);
 
     }
 
@@ -36,7 +36,7 @@ public class WsTest {
     public void init() {
         log.info("+++                                  init ....");
         JaxWsProxyFactoryBean factoryBean = new JaxWsProxyFactoryBean();
-        factoryBean.setAddress(address);
+        factoryBean.setAddress(ADDRESS);
         factoryBean.setServiceClass(HelloWorld.class);
         Object obj = factoryBean.create();
         Client client = ClientProxy.getClient(obj);
