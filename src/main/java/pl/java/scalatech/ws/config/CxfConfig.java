@@ -76,7 +76,7 @@ public class CxfConfig extends SpringBootServletInitializer {
         final SpringBus bus = new SpringBus();
         List<Feature> features = new ArrayList<>();
         features.add(loggingFeature());
-        bus.setProperty("ws-security.ut.validator", MyUsernameTokenValidator.class.getName());
+        // bus.setProperty("ws-security.ut.validator", MyUsernameTokenValidator.class.getName());
         bus.setFeatures(features);
         bus.setId("cxf");
         return bus;
