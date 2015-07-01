@@ -20,10 +20,11 @@ import org.apache.wss4j.dom.WSConstants;
 import org.apache.wss4j.dom.handler.WSHandlerConstants;
 
 import pl.java.scalatech.ws.service.HelloWorld;
+import pl.java.scalatech.ws.service.WS;
 
 import com.google.common.collect.Maps;
 
-public final class UsernameTokenUtil<T> {
+public final class UsernameTokenUtil<T extends WS> {
 
     public T getSecuredProxy(String address, String login, final String password) {
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
