@@ -1,5 +1,11 @@
+keytool -genkey -keyalg RSA -sigalg SHA1withRSA -validity 730 -alias serverKey -keypass przodowniks -storepass slawek_s -keystore serviceKeystore.jks -dname "cn=localhost"
+keytool -genkey -keyalg RSA -sigalg SHA1withRSA -validity 730 -alias clientKey  -keypass przodownikc -storepass slawek_c -keystore clientKeystore.jks -dname "cn=clientuser"
 
-keytool -genkey -keyalg RSA -sigalg SHA1withRSA -validity 730 -alias przodownikServer_key -keypass przodownikR1 -storepass przodownikR1 -keystore serviceKeystore.jks -dname "cn=localhost"
-keytool -genkey -keyalg RSA -sigalg SHA1withRSA -validity 730 -alias przodownikClientkey  -keypass przodownikR1 -storepass przodownik -keystore clientKeystore.jks -dname "cn=clientuser"
 
-keytool -import -file server.cer -keystore keystore.jks -alias przodownik -storepass przodownikR1
+two-way ssl 
+
+keytool -export -rfc -keystore clientKeystore.jks -storepass slawek_c -alias clientKey -file client.cer
+keytool -import -trustcacerts -keystore serviceKeystore.jks -storepass slawek_s -alias clientkey -file client.cer -noprompt
+
+keytool -export -rfc -keystore serviceKeystore.jks -storepass slawek_s -alias serverkey -file service.cer
+keytool -import -trustcacerts -keystore clientKeystore.jks -storepass slawek_c -alias serverkey -file service.cer -noprompt
