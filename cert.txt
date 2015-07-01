@@ -1,0 +1,5 @@
+
+keytool -genkey -keyalg RSA -sigalg SHA1withRSA -validity 730 -alias przodownikServer_key -keypass przodownikR1 -storepass przodownikR1 -keystore serviceKeystore.jks -dname "cn=localhost"
+keytool -genkey -keyalg RSA -sigalg SHA1withRSA -validity 730 -alias przodownikClientkey  -keypass przodownikR1 -storepass przodownik -keystore clientKeystore.jks -dname "cn=clientuser"
+
+keytool -import -file server.cer -keystore keystore.jks -alias przodownik -storepass przodownikR1

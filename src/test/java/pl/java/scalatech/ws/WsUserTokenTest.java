@@ -53,7 +53,7 @@ public class WsUserTokenTest {
     }
 
     @Test
-    public void testList() {
+    public void shouldUserTokenWork() {
         JaxWsProxyFactoryBean factoryBean = new JaxWsProxyFactoryBean();
         factoryBean.setAddress(ADDRESS);
         factoryBean.setServiceClass(HelloWorld.class);
