@@ -9,3 +9,9 @@ keytool -import -trustcacerts -keystore serviceKeystore.jks -storepass slawek_s 
 
 keytool -export -rfc -keystore serviceKeystore.jks -storepass slawek_s -alias serverkey -file service.cer
 keytool -import -trustcacerts -keystore clientKeystore.jks -storepass slawek_c -alias serverkey -file service.cer -noprompt
+
+
+    Get your client and server certificates, keystore and truststore ready. Make them available in classpath.
+    Write a property file to point to keystore and truststore properties (location, password, alias etc) to feed them to WSS4J. These properties are called crypto properties.
+    Write a password callback handler class to tell WSS4J about the private key password in the key store.
+    Write inbound and outbound interceptor beans. This beans will have a bunch of key value pairs in a map to define the characteristics of the security mechanism.

@@ -7,22 +7,15 @@ import javax.xml.ws.WebServiceException;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.endpoint.Endpoint;
-import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
-import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
-import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 import org.apache.wss4j.dom.WSConstants;
 import org.apache.wss4j.dom.handler.WSHandlerConstants;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import pl.java.scalatech.ws.security.ClientPasswordCallback;
 import pl.java.scalatech.ws.security.ServerPasswordCallback;
 import pl.java.scalatech.ws.service.HelloWorld;
 import pl.java.scalatech.ws.service.HelloWorldImpl;
@@ -52,39 +45,6 @@ public class WsUserTokenTest {
     }
 
     @Test
-    public void shouldUserTokenWork() {
-        JaxWsProxyFactoryBean factoryBean = new JaxWsProxyFactoryBean();
-        factoryBean.setAddress(ADDRESS);
-        factoryBean.setServiceClass(HelloWorld.class);
-        Object obj = factoryBean.create();
-        Client client = ClientProxy.getClient(obj);
-        Endpoint endpoint = client.getEndpoint();
-        Map<String, Object> props = Maps.newHashMap();
-        props.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
-        props.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
-        props.put(WSHandlerConstants.PW_CALLBACK_CLASS, ClientPasswordCallback.class.getName());
-        props.put(WSHandlerConstants.USER, "przodownik");
-        WSS4JOutInterceptor wss4JOutInterceptor = new WSS4JOutInterceptor(props);
-        endpoint.getOutInterceptors().add(wss4JOutInterceptor);
-        LoggingOutInterceptor outLog = new LoggingOutInterceptor();
-        outLog.setPrettyLogging(true);
-        endpoint.getOutInterceptors().add(outLog);
-
-        HelloWorld service = (HelloWorld) obj;
-        try {
-            log.info("+++ {}", service.sayHi("slawek"));
-        } catch (Exception e) {
-            if (e instanceof WebServiceException && e.getCause() instanceof SocketTimeoutException) {
-                log.error("This is timeout exception.", e);
-            } else {
-                log.error("{}", e);
-
-            }
-            Assert.fail();
-        }
-    }
-
-    @Test
     public void shouldGetSecuredProxyServiceWork() {
 
         UsernameTokenUtil<HelloWorld> util = new UsernameTokenUtil<>();
@@ -103,3 +63,38 @@ public class WsUserTokenTest {
     }
 
 }
+/*
+ * @Test
+ 
+public void shouldUserTokenWork() {
+    JaxWsProxyFactoryBean factoryBean = new JaxWsProxyFactoryBean();
+    factoryBean.setAddress(ADDRESS);
+    factoryBean.setServiceClass(HelloWorld.class);
+    Object obj = factoryBean.create();
+    Client client = ClientProxy.getClient(obj);
+    Endpoint endpoint = client.getEndpoint();
+    Map<String, Object> props = Maps.newHashMap();
+    props.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
+    props.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
+    props.put(WSHandlerConstants.PW_CALLBACK_CLASS, ClientPasswordCallback.class.getName());
+    props.put(WSHandlerConstants.USER, "przodownik");
+    WSS4JOutInterceptor wss4JOutInterceptor = new WSS4JOutInterceptor(props);
+    endpoint.getOutInterceptors().add(wss4JOutInterceptor);
+    LoggingOutInterceptor outLog = new LoggingOutInterceptor();
+    outLog.setPrettyLogging(true);
+    endpoint.getOutInterceptors().add(outLog);
+
+    HelloWorld service = (HelloWorld) obj;
+    try {
+        log.info("+++ {}", service.sayHi("slawek"));
+    } catch (Exception e) {
+        if (e instanceof WebServiceException && e.getCause() instanceof SocketTimeoutException) {
+            log.error("This is timeout exception.", e);
+        } else {
+            log.error("{}", e);
+
+        }
+        Assert.fail();
+    }
+}
+*/

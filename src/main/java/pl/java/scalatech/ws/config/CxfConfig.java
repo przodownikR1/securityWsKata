@@ -98,6 +98,7 @@ public class CxfConfig extends SpringBootServletInitializer {
         inProps.put(WSHandlerConstants.PW_CALLBACK_CLASS, ClientPasswordCallback.class.getName());
         inProps.put("ws-security.callback-handler", ServerPasswordCallback.class.getName());
         WSS4JInInterceptor wssIn = new WSS4JInInterceptor(inProps);
+
         endpoint.getInInterceptors().add(wssIn);
         endpoint.getInInterceptors().add(new SAAJInInterceptor());
 
